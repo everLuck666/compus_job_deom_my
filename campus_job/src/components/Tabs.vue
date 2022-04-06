@@ -44,7 +44,7 @@ export default {
           { name: "/content/teacherHome", navItem: "个人中心" },
           { name: "/content/verify", navItem: "岗位审核" },
           // { name: "/content/verifyCompany", navItem: "公司审核" },
-           { name: "/content/resume", navItem: "学生就业情况" },
+           { name: "/content/jobInformation", navItem: "学生就业情况" },
           { name: "/content/personalCenter", navItem: "论坛" }
         ],
          [

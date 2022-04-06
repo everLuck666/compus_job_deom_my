@@ -31,10 +31,6 @@
         <el-input v-model="form.jobNum" :disabled="true"></el-input>
       </el-form-item>
 
-      <el-form-item label="审核公司数量">
-        <el-input v-model="form.companyNum" :disabled="true"></el-input>
-      </el-form-item>
-
       <el-form-item>
         <el-button type="primary" @click="onSubmit">{{ buttonText }}</el-button>
       </el-form-item>

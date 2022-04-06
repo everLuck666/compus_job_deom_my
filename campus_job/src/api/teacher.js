@@ -56,3 +56,16 @@ export async function vertifyJob(jobID, status) {
   return data.msg;
 
 }
+
+// 得到学生就业情况
+export async function getJobInformation() {
+
+  const { data } = await http.get('/school/jobInformation');
+
+  if (data.status === 200) {
+    return data.data;
+  } 
+
+  return data.msg;
+
+}

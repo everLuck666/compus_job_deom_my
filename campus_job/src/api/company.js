@@ -50,3 +50,9 @@ export async function getStudentInfoByEnterpriseID(enterpriseID) {
 export async function passOrOut(stationID, userID, state) {
   return http.post(`enterprise/changeStationState`, {'stationID': stationID, 'userID': userID, 'state': state});
 }
+
+// 下载应聘者简历
+export async function downLoad(userID) {
+  console.log('发起下载简历请求');
+  return http.get(`file/download/${userID}.pdf`);
+}

@@ -31,13 +31,23 @@
         <el-button @click="handleOutClick(scope.row)" type="text" size="small"
           >淘汰</el-button
         >
+        <el-button
+          @click="handleDownloadClick(scope.row)"
+          type="text"
+          size="small"
+          >下载简历</el-button
+        >
       </template>
     </el-table-column>
   </el-table>
 </template>
 
 <script>
-import { getStudentInfoByEnterpriseID, passOrOut } from '../../api/company.js';
+import {
+  getStudentInfoByEnterpriseID,
+  passOrOut,
+  downLoad,
+} from '../../api/company.js';
 
 export default {
   methods: {
@@ -52,6 +62,33 @@ export default {
       console.log(this.$route.query.id);
       await passOrOut(this.$route.query.id, row.sno, '-2');
       await this.getStudentInfoByEnterpriseID();
+    },
+    async handleDownloadClick(row) {
+      const data = await downLoad(row.sno);
+      console.log(`打开的sno是${row.sno}`);
+      // window.open(`/file/download/123.pdf`);
+
+      // let a = document.createElement('a');
+      // a.style = 'display: none'; // 创建一个隐藏的a标签
+      // // a.download = filename;
+      // a.href = `/file/download/123.pdf`;
+      // document.body.appendChild(a);
+      // a.click(); // 触发a标签的click事件
+      // document.body.removeChild(a);
+
+      // data为blob格式
+      // var blob = new Blob([data]);
+      // var downloadElement = document.createElement('a');
+      // var href = window.URL.createObjectURL(blob);
+      // downloadElement.href = href;
+      // downloadElement.download = fileName;
+      // document.body.appendChild(downloadElement);
+      // downloadElement.click();
+      // document.body.removeChild(downloadElement);
+      // window.URL.revokeObjectURL(href);
+
+       const url = `http://localhost:8888/static/pdf/${row.sno}.pdf`;
+       window.open(url);
     },
     getProcess(value) {
       console.log('--------process');
@@ -71,13 +108,13 @@ export default {
       }
       return 0;
     },
-     getsStatus(value) {
+    getsStatus(value) {
       console.log('--------process');
       console.log(value);
       console.log(typeof value);
       switch (value) {
-        case '-2' :
-            return "exception"
+        case '-2':
+          return 'exception';
         case '-1':
           return '';
         case '0':
@@ -101,7 +138,7 @@ export default {
     },
   },
   async mounted() {
-      await this.getStudentInfoByEnterpriseID();
+    await this.getStudentInfoByEnterpriseID();
   },
   data() {
     return {

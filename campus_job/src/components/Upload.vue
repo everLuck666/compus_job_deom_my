@@ -1,9 +1,12 @@
 <template>
   <el-upload
     class="upload-demo"
+    action="/api/file/resume"
     drag
-    action="https://jsonplaceholder.typicode.com/posts/"
-    multiple
+    :show-file-list="false"
+    :on-success="handleSuccess"
+    :before-upload="beforeAvatarUpload"
+    :headers="uploadHeaders"
   >
     <i class="el-icon-upload"></i>
     <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -14,7 +17,22 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      uploadHeaders:{"token":sessionStorage.getItem('token')},
+    };
+  },
+  methods: {
+    handleSuccess() {
+       this.$message({
+            message: "上传头像成功",
+            type: "success"
+          });
+    }
+  }
+
+};
 </script>
 
 <style lang="scss" scoped></style>

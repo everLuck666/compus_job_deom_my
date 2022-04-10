@@ -129,6 +129,8 @@ const store = new Vuex.Store({
       } = await searchJob({'status': 1, ...payload});
 
       if (data.status === 200) {
+
+        console.error('我拿到的岗位信息是', data.data);
         context.commit('setData',  {
           jobList: {...data.data}
         });

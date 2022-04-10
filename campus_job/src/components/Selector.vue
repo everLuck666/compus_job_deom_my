@@ -124,11 +124,12 @@ export default {
     handleChangePosition(positionValue) {
       this.search(positionValue[positionValue.length - 1]);
     },
-    async search(search) {
-      if (!search) {
-        search = this.input;
-      }
-      const { data } = await searchLike(search);
+    async search() {
+      // if (!search) {
+      //   search = this.input;
+      // }
+      const { data } = await searchLike(this.input);
+      this.input = '';
       if (data.status == 200) {
         this.$store.commit('setData', {
           jobList: { ...data.data },

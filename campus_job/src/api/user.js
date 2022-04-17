@@ -107,3 +107,13 @@ export async function getPostComment(pageNum, postID) {
 export async function postComment(comment) {
 return await http.post('users/postComment', comment);
 }
+
+// 得到通知信息
+export async function getInform() {
+  return await http.get('users/inform');
+}
+
+// 接受企业邀请
+export async function userIntention(status, enterpriseID) {
+  return await http.post('users/inform', {status, enterpriseID});
+}

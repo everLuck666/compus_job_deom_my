@@ -38,7 +38,8 @@ export default {
           { name: "/content/job", navItem: "求职" },
           { name: '/content/jobProcess', navItem: "求职进度" },
           { name: "/content/personalCenter", navItem: "论坛" },
-          { name: "/content/chat", navItem: "人脉" }
+          { name: "/content/chat", navItem: "人脉" },
+          { name: "/content/inform", navItem: "通知" },
         ],
          [
           { name: "/content/teacherHome", navItem: "个人中心" },
@@ -51,7 +52,7 @@ export default {
          
           { name: "/content/enterpriseHome", navItem: "岗位发布" },
           { name: "/content/managerjob", navItem: "岗位管理" },
-          { name: "/content/job", navItem: "主动邀约" },
+          { name: "/content/jobIntention", navItem: "主动邀约" },
           { name: "/content/personalCenter", navItem: "论坛" }
         ],
 

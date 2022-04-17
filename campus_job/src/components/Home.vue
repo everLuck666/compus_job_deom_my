@@ -8,6 +8,15 @@
           :disabled="true"
         ></el-input>
       </el-form-item>
+      <el-form-item label="求职意向">
+        <el-cascader
+          v-model="form.intention"
+          :options="this.options"
+          :props="{ expandTrigger: 'hover' }"
+          @change="handleChange"
+          :disabled="forbidden"
+        ></el-cascader>
+      </el-form-item>
       <el-form-item label="学校名称">
         <el-input v-model="form.schoolName" :disabled="true"></el-input>
       </el-form-item>
@@ -80,59 +89,69 @@
 </template>
 
 <script>
-
 import { getStudentInfo, updateStudentInfo } from '../api/user.js';
 export default {
+  name: 'Home',
+  created() {
+    // //在页面加载时读取sessionStorage里的状态信息
+    // if (sessionStorage.getItem("state") ) {
+    //   this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(sessionStorage.getItem("store"))))
+    // }
 
-  name: "Home",
-   created () {
-      // //在页面加载时读取sessionStorage里的状态信息
-      // if (sessionStorage.getItem("state") ) {
-      //   this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(sessionStorage.getItem("store"))))
-      // }
-
-      //在页面刷新时将vuex里的最新信息保存到sessionStorage里
-      window.addEventListener("beforeunload",()=>{
-        sessionStorage.setItem("state",JSON.stringify(this.$store.state))
-      })
-    },
+    //在页面刷新时将vuex里的最新信息保存到sessionStorage里
+    window.addEventListener('beforeunload', () => {
+      sessionStorage.setItem('state', JSON.stringify(this.$store.state));
+    });
+  },
   async mounted() {
-
     await this.getStudentInfo();
 
     sessionStorage.setItem('user', JSON.stringify(this.form));
     console.log('-----看看本地用户有没有存储进去');
     console.log(sessionStorage.getItem('user'));
     this.$store.commit('setData', {
-      currentUser: this.form
+      currentUser: this.form,
     });
     console.log('------看看currentUser有没有存进去');
     console.log(this.$store.state.currentUser);
-
-   
   },
   data() {
     return {
-      buttonText: "修改",
+      buttonText: '修改',
       forbidden: true,
       form: {
         sno: '',
-        userName: "3232",
-        schoolName: "",
+        userName: '3232',
+        schoolName: '',
         phone: '',
-        beginSchoolTime: "",
+        beginSchoolTime: '',
         hobby: [],
         graduate: 3,
         isHard: 3,
-        mutto: "",
-        achieve: "",
-        project: ""
+        mutto: '',
+        achieve: '',
+        project: '',
+        intention: '',
       },
+       options: [
+          {
+            value: '制造业',
+            label: '制造业',
+          },
+
+          {
+            value: '软件开发',
+            label: '软件开发',
+          },
+          {
+            value: '通信/硬件',
+            label: '通信/硬件',
+          },
+        ],
     };
   },
   methods: {
     async onSubmit() {
-      
       this.loading = true;
       if (!this.forbidden) {
         console.log('-------修改学生信息-------');
@@ -143,7 +162,7 @@ export default {
         for (let i = 0; i < this.form.hobby.length; i++) {
           hobbyText += this.form.hobby[i];
           if (i != this.form.hobby.length - 1) {
-            hobbyText += ','
+            hobbyText += ',';
           }
         }
 
@@ -153,56 +172,50 @@ export default {
 
         console.log('----------------');
         this.form['hobby'] = hobbyText;
-      const result = await updateStudentInfo(this.form);
+        const result = await updateStudentInfo(this.form);
 
-      console.log(result);
+        console.log(result);
 
-      if (result) {
-
-         this.$message({
-            message: "修改成功",
-            type: "success"
+        if (result) {
+          this.$message({
+            message: '修改成功',
+            type: 'success',
           });
 
           this.getStudentInfo();
-      } else {
-        this.$message.error('修改失败');
-      }
-
-
-
+        } else {
+          this.$message.error('修改失败');
+        }
       }
 
       this.forbidden = !this.forbidden;
-
     },
     async getStudentInfo() {
+      const data = await getStudentInfo();
 
-    const data = await getStudentInfo();
+      console.log('查询的个人学生中心的数据是', data);
 
-    console.log('查询的个人学生中心的数据是',data);
+      for (let key in this.form) {
+        this.form[key] = data[key];
+      }
 
-    for(let key in this.form) {
-      this.form[key] = data[key];
+      if (data['hobby']) {
+        const hobbyArr = data['hobby'].split(',');
+        this.form['hobby'] = hobbyArr;
+      } else {
+        this.form['hobby'] = null;
+      }
+    },
+    handleChange(value) {
+      console.warn(value);
+      this.form.intention = value[value.length - 1];
     }
-    
-    if (data['hobby']) {
-      const hobbyArr = data['hobby'].split(',');
-      this.form['hobby'] = hobbyArr;
-    } else {
-       this.form['hobby'] = null;
-    }
-
-    }
-    
-
   },
   watch: {
     forbidden(newValue) {
-        this.buttonText = !this.forbidden ? '完成' : '修改';
-    }
-
-  }
+      this.buttonText = !this.forbidden ? '完成' : '修改';
+    },
+  },
 };
 </script>
 

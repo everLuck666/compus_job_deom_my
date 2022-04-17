@@ -19,6 +19,8 @@ const InterestJob = () => import("../components/Company/InterestJob.vue");
 const TieBa = () => import("../views/TieBa.vue");
 const CommentContainer = () => import("../views/CommentContainer.vue");
 const JobInformation = () => import("../components/Teacher/JobInformation.vue");
+const JobIntention = () => import("../components/Company/JobIntention.vue");
+const Inform = () => import("../components/Student/Inform.vue");
 
 Vue.use(Router);
 
@@ -36,6 +38,10 @@ const companyRouter = [
   {
     path: 'interestJob',
     component: InterestJob
+  }, 
+  {
+    path: 'jobIntention',
+    component: JobIntention
   }
 ];
 
@@ -69,6 +75,10 @@ const sutdentRouter = [
   {
     path: 'jobProcess',
     component: JobProcess
+  },
+  {
+    path: 'inform',
+    component: Inform
   }
 ];
 

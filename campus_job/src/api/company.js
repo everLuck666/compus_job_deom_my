@@ -56,3 +56,18 @@ export async function downLoad(userID) {
   console.log('发起下载简历请求');
   return http.get(`file/download/${userID}.pdf`);
 }
+
+// 获取邀约用户
+export async function getJobIntention(search) {
+  return http.post(`/enterprise/jobIntention/`, {search});
+}
+
+// 邀请用户
+export async function inviteUser(sno) {
+  return http.post('/enterprise/invite', {sno})
+}
+
+// 得到接受邀请用户列表
+export async function getUserInviteAcc() {
+  return http.get('enterprise/userAcc');
+}

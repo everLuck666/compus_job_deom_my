@@ -26,7 +26,7 @@ export default {
   methods: {
     handleSuccess() {
        this.$message({
-            message: "上传头像成功",
+            message: "上传成功",
             type: "success"
           });
     }

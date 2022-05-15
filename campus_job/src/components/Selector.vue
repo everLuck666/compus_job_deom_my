@@ -122,18 +122,28 @@ export default {
       this.search(value[value.length - 1]);
     },
     handleChangePosition(positionValue) {
+      console.log('搜索的城市是', positionValue);
       this.search(positionValue[positionValue.length - 1]);
     },
-    async search() {
+    async search(search) {
       // if (!search) {
       //   search = this.input;
       // }
-      const { data } = await searchLike(this.input);
-      this.input = '';
-      if (data.status == 200) {
-        this.$store.commit('setData', {
-          jobList: { ...data.data },
-        });
+      if (search && !search.isTrusted) {
+        const { data } = await searchLike(search);
+        if (data.status == 200) {
+          this.$store.commit('setData', {
+            jobList: { ...data.data },
+          });
+        }
+      } else {
+        const { data } = await searchLike(this.input);
+        this.input = '';
+        if (data.status == 200) {
+          this.$store.commit('setData', {
+            jobList: { ...data.data },
+          });
+        }
       }
     },
   },

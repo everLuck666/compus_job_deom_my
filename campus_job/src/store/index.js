@@ -152,7 +152,7 @@ const store = new Vuex.Store({
        
           this.dispatch('GET_USERS');
 
-        }.bind(context), 5000);
+        }.bind(context), 10000);
       },
 
        /**

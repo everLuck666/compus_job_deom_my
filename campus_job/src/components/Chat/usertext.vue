@@ -19,7 +19,7 @@
       <el-button id="uploadImgBtn" icon="el-icon-picture-outline"></el-button>
     </el-upload>
     </div>
-    <textarea id="textarea" placeholder="按 Ctrl + Enter 发送" v-model="content" v-on:keyup="addMessage">
+    <textarea id="textarea" placeholder="按 Ctrl + Enter 发送" v-model="content" v-on:keyup.enter="addMessageByClick">
     </textarea>
     <el-button id="sendBtn" type="primary" size="mini" @click="addMessageByClick" >发送(S)</el-button>
   </div>
@@ -70,6 +70,7 @@ export default {
 
         console.log('--------------');
         this.$store.state.stomp.send("/app/ws/chat",{},JSON.stringify(msgObj));
+        console.error('发送的消息是', JSON.stringify(msgObj));
         //提交私聊消息记录
 
         console.log('******点击之后提交的数据********');

@@ -117,3 +117,8 @@ export async function getInform() {
 export async function userIntention(status, enterpriseID) {
   return await http.post('users/inform', {status, enterpriseID});
 }
+
+// 获取企业头像
+export async function getUserAvatar(){
+  return await http.get('users/avatar');
+}

@@ -203,7 +203,7 @@ export default {
         const hobbyArr = data['hobby'].split(',');
         this.form['hobby'] = hobbyArr;
       } else {
-        this.form['hobby'] = null;
+        this.form['hobby'] = [];
       }
     },
     handleChange(value) {

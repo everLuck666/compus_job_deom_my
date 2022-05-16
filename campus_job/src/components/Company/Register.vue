@@ -107,7 +107,7 @@ export default {
     handleSuccess() {
       this.dialogChange(false);
        this.$message({
-            message: "上传成功，等待管理员审核",
+            message: "上传成功",
             type: "success"
           });
 
